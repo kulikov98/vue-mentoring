@@ -1,20 +1,21 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 
-const props = defineProps<{
+interface Props {
   label: string,
-  primary?: boolean,
   backgroundColor?: string,
   size?: 'medium' | 'large',
-}>();
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  size: 'medium',
+});
 
 const emit = defineEmits(['click']);
 
 const classes = computed(() => ({
   button: true,
-  'button--primary': props.primary,
-  'button--secondary': !props.primary,
-  [`button--${props.size || 'medium'}`]: true,
+  [`button--${props.size}`]: true,
 }));
 
 const style = computed(() => ({
@@ -33,15 +34,12 @@ const style = computed(() => ({
   cursor: pointer;
   display: inline-block;
   line-height: 1;
+  color: var(--white);
+  background-color: var(--pink);
 }
 
 .button:hover {
   opacity: 0.95;
-}
-
-.button--primary {
-  color: var(--white);
-  background-color: var(--pink);
 }
 
 .button--medium {

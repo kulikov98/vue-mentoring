@@ -21,15 +21,13 @@ const Template = (args) => ({
   template: '<AppButton :="args" />',
 });
 
-export const Primary = Template.bind({});
-Primary.args = {
-  primary: true,
+export const Medium = Template.bind({});
+Medium.args = {
   label: 'SEARCH',
 };
 
 export const Large = Template.bind({});
 Large.args = {
-  primary: true,
   size: 'large',
   label: 'SEARCH',
 };
