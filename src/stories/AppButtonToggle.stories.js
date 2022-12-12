@@ -18,7 +18,8 @@ const Template = (args) => ({
 
 export const Default = Template.bind({});
 Default.args = {
-  buttons: [{ name: 'ONE' }, { name: 'TWO' }, { name: 'TREE' }],
+  inputName: 'search-by',
+  buttons: [{ name: 'one' }, { name: 'two' }, { name: 'tree' }],
 };
 
 export const WithSelected = Template.bind({});

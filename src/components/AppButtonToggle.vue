@@ -1,17 +1,23 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 const props = defineProps<{
+    inputName: string,
     buttons: Array<{ name: string }>,
     selected?: string,
     title?: string,
 }>();
 
 const selected = ref(props.selected
-  ? props.selected
-  : props.buttons[0].name);
+    ? props.selected
+    : props.buttons[0].name
+);
 
 const emit = defineEmits(['selected']);
+
+watch(selected, () => {
+    emit('selected', selected.value);
+});
 </script>
 
 <template>
@@ -19,12 +25,7 @@ const emit = defineEmits(['selected']);
         <span class="title" v-if="title">{{ title }}</span>
         <label v-for="btn in buttons" :key="btn.name" :class="{ selected: selected === btn.name }">
             {{ btn.name }}
-            <input
-                name="btn-toggle"
-                type="radio"
-                @change="emit('selected', btn.name)"
-                v-model="selected" :value="btn.name"
-            >
+            <input type="radio" :name="inputName" :value="btn.name" v-model="selected">
         </label>
     </div>
 </template>
@@ -34,6 +35,7 @@ const emit = defineEmits(['selected']);
     display: flex;
     align-items: center;
 }
+
 .title {
     margin-right: 15px;
     color: var(--white);
@@ -46,6 +48,7 @@ input {
 label {
     padding: 8px 20px;
     font-size: var(--font-size-small);
+    text-transform: uppercase;
     background-color: var(--gray-light);
     color: var(--white);
     cursor: pointer;
