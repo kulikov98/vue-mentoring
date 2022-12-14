@@ -31,5 +31,5 @@ WithSelected.args = {
 export const WithTitle = Template.bind({});
 WithTitle.args = {
   ...Default.args,
-  title: 'SEARCH BY',
+  title: 'search by',
 };
