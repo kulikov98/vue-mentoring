@@ -5,19 +5,30 @@ defineProps<{
     withSearch: boolean;
 }>();
 
-const emit = defineEmits(['click']);
+const emit = defineEmits(['show-search']);
 </script>
 
 <template>
-    <header>
-        <AppLogo />
-        <button v-if="withSearch" @click="emit('click')">
-            <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
-        </button>
-    </header>
+    <section>
+        <header>
+            <AppLogo />
+            <button v-if="withSearch" @click="emit('show-search')">
+                <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
+            </button>
+        </header>
+        <article>
+            <slot></slot>
+        </article>
+    </section>
 </template>
 
 <style scoped>
+section {
+    background: url('../assets/header-bg.jpeg');
+    background-size: cover;
+    padding: 20px 55px;
+}
+
 header {
     display: flex;
     justify-content: space-between;
@@ -31,7 +42,7 @@ button {
     color: var(--pink);
     cursor: pointer;
     font-size: 22px;
-    transform:rotateY(180deg);
+    transform: rotateY(180deg);
 }
 
 button:hover {
