@@ -7,9 +7,9 @@ module.exports = defineConfig({
     config.module.rule('optimize-images')
       .test(/\.(gif|png|jpe?g|svg)$/i)
       .use('file-loader')
-        .loader('image-webpack-loader')
-          .options({
-            disable: true,
-          })
+      .loader('image-webpack-loader')
+      .options({
+        disable: true,
+      });
   },
 });
