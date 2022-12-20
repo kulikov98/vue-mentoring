@@ -1,8 +1,6 @@
 <script setup lang="ts">
-/* eslint-disable camelcase */
+/* eslint-disable camelcase, vuejs-accessibility/alt-text */
 import { computed } from 'vue';
-import { getMoviePosterUrl } from '@/helpers/api-service';
-import { genPosterAltText } from '@/helpers/functions';
 import MovieParam from './MovieParam.vue';
 
 /*
@@ -29,14 +27,12 @@ const props = defineProps<{
 }>();
 
 const genre = computed(() => props.genre_ids);
-const image = computed(() => getMoviePosterUrl(props.poster_path));
 const year = computed(() => props.release_date?.split('-')[0]);
-const altText = computed(() => genPosterAltText(props.title));
 </script>
 
 <template>
     <article>
-        <img :src="image" :alt="altText">
+        <img v-image:poster="{ path: poster_path, title }">
         <div class="description">
             <header>
                 <h1 class="title">{{ title }}</h1>
