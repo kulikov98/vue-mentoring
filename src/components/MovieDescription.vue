@@ -1,27 +1,37 @@
 <script setup lang="ts">
+/* eslint-disable camelcase */
 import { computed } from 'vue';
-import { genPosterAltText } from '../helpers/functions';
+import { getMoviePosterUrl } from '@/helpers/api-service';
+import { genPosterAltText } from '@/helpers/functions';
 import MovieParam from './MovieParam.vue';
-// eslint-disable-next-line
-import { MovieCardProps } from './MovieCard.vue';
 
 /*
- * Cannot use MovieCardProps interface because of https://github.com/vuejs/core/issues/4294
- * It works in Vue with 'unplugin-vue-macros' as suggested here:
+ * Cannot use IMovie interface because of https://github.com/vuejs/core/issues/4294
+ * it works in Vue with 'unplugin-vue-macros' as suggested here:
  * https://github.com/vuejs/core/issues/4294#issuecomment-1316097560
- * But I wansn't able to make it work with storybook
+ * but I wansn't able to make it work with storybook
  */
 const props = defineProps<{
-    image: string;
-    name: string;
-    genre?: string;
-    year?: string;
-    duration?: string;
-    rating?: string;
-    description?: string;
+    adult: boolean;
+    backdrop_path: string | null;
+    genre_ids: number[];
+    id: number;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    release_date: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
 }>();
 
-const altText = computed(() => genPosterAltText(props.name));
+const genre = computed(() => props.genre_ids);
+const image = computed(() => getMoviePosterUrl(props.poster_path));
+const year = computed(() => props.release_date?.split('-')[0]);
+const altText = computed(() => genPosterAltText(props.title));
 </script>
 
 <template>
@@ -29,15 +39,15 @@ const altText = computed(() => genPosterAltText(props.name));
         <img :src="image" :alt="altText">
         <div class="description">
             <header>
-                <h1 class="title">{{ name }}</h1>
+                <h1 class="title">{{ title }}</h1>
                 <span class="rating"></span>
             </header>
             <span class="genre">{{ genre }}</span>
             <div class="params">
                 <MovieParam unit="year" :value="year" />
-                <MovieParam unit="min" :value="duration" />
+                <!-- <MovieParam unit="min" :value="duration" /> -->
             </div>
-            <p>{{ description }}</p>
+            <p>{{ overview }}</p>
         </div>
 
     </article>
