@@ -1,16 +1,12 @@
 <script setup lang="ts">
 /* eslint-disable camelcase */
 import { IMovie } from '@/helpers/types';
+import { useMovieStore } from '@/stores/MovieStore';
+import { storeToRefs } from 'pinia';
 import MovieCard from './MovieCard.vue';
 
-defineProps<{
-  isLoading: boolean;
-  page: number;
-  results: IMovie[];
-  total_pages: number;
-  total_results: number;
-}>();
-
+const store = useMovieStore();
+const { isLoading, data } = storeToRefs(store);
 const emit = defineEmits(['select-movie']);
 </script>
 
@@ -21,11 +17,11 @@ const emit = defineEmits(['select-movie']);
     >Looking for movies...</span
   >
   <section
-    v-else-if="!isLoading && results.length > 0"
+    v-else-if="!isLoading && data.results.length > 0"
     class="movie-list"
   >
     <MovieCard
-      v-for="movie in results"
+      v-for="movie in data.results"
       :key="movie.id"
       :="movie"
       @click="emit('select-movie', movie)"

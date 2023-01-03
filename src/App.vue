@@ -7,19 +7,12 @@ import MovieSearch from './components/MovieSearch.vue';
 import MovieList from './components/MovieList.vue';
 import MovieDescription from './components/MovieDescription.vue';
 import { SearchBy, SortBy } from './helpers/constants';
-import { IMovieSearchResult } from './helpers/types';
-import { getMoviesDiscovery, getMovies } from './helpers/api-service';
+import { useMovieStore } from './stores/MovieStore';
 
+const store = useMovieStore();
 const sortBy = ref(SortBy.ReleaseDate);
 const searchBy = ref(SearchBy.Title);
 const searchQuery = ref('');
-const movieSearchResult = ref<IMovieSearchResult>({
-  page: 0,
-  results: [],
-  total_pages: 0,
-  total_results: 0,
-});
-const isLoading = ref(false);
 const selectedMovie = ref();
 
 const sortByProps = {
@@ -35,17 +28,11 @@ const searchByProps = {
   title: 'search by',
 };
 
-const search = async () => {
-  try {
-    isLoading.value = true;
-
-    if (searchQuery.value === '') {
-      movieSearchResult.value = await getMoviesDiscovery(sortBy.value);
-    } else {
-      movieSearchResult.value = await getMovies(searchQuery.value, sortBy.value);
-    }
-  } finally {
-    isLoading.value = false;
+const search = () => {
+  if (searchQuery.value === '') {
+    store.getMoviesDiscovery(sortBy.value);
+  } else {
+    store.getMovies(searchQuery.value);
   }
 };
 
@@ -93,11 +80,7 @@ search();
 
   <!-- Search results -->
   <section class="search-results">
-    <MovieList
-      :isLoading="isLoading"
-      :="movieSearchResult"
-      @select-movie="(movie) => (selectedMovie = movie)"
-    />
+    <MovieList @select-movie="(movie) => (selectedMovie = movie)" />
   </section>
 </template>
 
