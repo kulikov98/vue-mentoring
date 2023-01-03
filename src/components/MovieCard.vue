@@ -1,8 +1,6 @@
 <script setup lang="ts">
-/* eslint-disable camelcase */
-import { getMoviePosterUrl } from '@/helpers/api-service';
+/* eslint-disable camelcase, vuejs-accessibility/alt-text */
 import { computed } from 'vue';
-import { genPosterAltText } from '../helpers/functions';
 
 const props = defineProps<{
   adult: boolean;
@@ -22,17 +20,12 @@ const props = defineProps<{
 }>();
 
 const genre = computed(() => props.genre_ids);
-const image = computed(() => getMoviePosterUrl(props.poster_path));
 const year = computed(() => props.release_date?.split('-')[0]);
-const altText = computed(() => genPosterAltText(props.title));
 </script>
 
 <template>
   <article class="card">
-    <img
-      :src="image"
-      :alt="altText"
-    />
+    <img v-image:poster.lazy="{ path: poster_path, title }" />
     <footer>
       <div class="description">
         <span class="name">{{ title }}</span>
