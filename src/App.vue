@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import AppHeader from './components/AppHeader.vue';
 import AppButtonToggle from './components/AppButtonToggle.vue';
 
@@ -10,10 +10,7 @@ import { SearchBy, SortBy } from './helpers/constants';
 import { useMovieStore } from './stores/MovieStore';
 
 const store = useMovieStore();
-const sortBy = ref(SortBy.ReleaseDate);
-const searchBy = ref(SearchBy.Title);
-const searchQuery = ref('');
-const selectedMovie = ref();
+const { selectedMovie, sortBy, searchBy } = storeToRefs(store);
 
 const sortByProps = {
   inputName: 'sort-by',
@@ -28,44 +25,27 @@ const searchByProps = {
   title: 'search by',
 };
 
-const search = () => {
-  if (searchQuery.value === '') {
-    store.getMoviesDiscovery(sortBy.value);
-  } else {
-    store.getMovies(searchQuery.value);
-  }
-};
-
-watch(sortBy, search);
-watch(searchQuery, search);
-
 // initial load
-search();
+store.search();
 </script>
 
 <template>
   <!-- Header -->
-  <AppHeader
-    :withSearch="Boolean(selectedMovie)"
-    @show-search="selectedMovie = null"
-  >
+  <AppHeader>
     <div
       v-if="Boolean(selectedMovie)"
       class="movie-description"
     >
-      <MovieDescription :="selectedMovie" />
+      <MovieDescription />
     </div>
     <div
       v-else
       class="movie-search"
     >
-      <MovieSearch
-        :searchQuery="searchQuery"
-        @search="(v) => (searchQuery = v)"
-      />
+      <MovieSearch />
       <AppButtonToggle
         :="searchByProps"
-        @selected="(v) => (searchBy = v)"
+        @selected="(v) => store.setSearchBy(v)"
       />
     </div>
   </AppHeader>
@@ -74,13 +54,13 @@ search();
   <section class="sort">
     <AppButtonToggle
       :="sortByProps"
-      @selected="(v) => (sortBy = v)"
+      @selected="(v) => store.setSortBy(v)"
     ></AppButtonToggle>
   </section>
 
   <!-- Search results -->
   <section class="search-results">
-    <MovieList @select-movie="(movie) => (selectedMovie = movie)" />
+    <MovieList />
   </section>
 </template>
 

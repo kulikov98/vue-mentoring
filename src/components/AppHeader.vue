@@ -1,18 +1,15 @@
 <script setup lang="ts">
+import { useMovieStore } from '@/stores/MovieStore';
 import AppLogo from './AppLogo.vue';
 
-defineProps<{
-    withSearch: boolean;
-}>();
-
-const emit = defineEmits(['show-search']);
+const store = useMovieStore();
 </script>
 
 <template>
     <section>
         <header>
             <AppLogo />
-            <button v-if="withSearch" @click="emit('show-search')">
+            <button v-if="store.withSearch" @click="store.selectMovie(null)">
                 <font-awesome-icon icon="fa-solid fa-magnifying-glass" />
             </button>
         </header>

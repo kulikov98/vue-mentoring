@@ -1,41 +1,23 @@
 <script setup lang="ts">
 /* eslint-disable camelcase, vuejs-accessibility/alt-text */
+import { useMovieStore } from '@/stores/MovieStore';
+import { storeToRefs } from 'pinia';
 import { computed } from 'vue';
 import MovieParam from './MovieParam.vue';
 
-/*
- * Cannot use IMovie interface because of https://github.com/vuejs/core/issues/4294
- * it works in Vue with 'unplugin-vue-macros' as suggested here:
- * https://github.com/vuejs/core/issues/4294#issuecomment-1316097560
- * but I wansn't able to make it work with storybook
- */
-const props = defineProps<{
-    adult: boolean;
-    backdrop_path: string | null;
-    genre_ids: number[];
-    id: number;
-    original_language: string;
-    original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    release_date: string;
-    title: string;
-    video: boolean;
-    vote_average: number;
-    vote_count: number;
-}>();
+const store = useMovieStore();
+const { currentMovie: movie } = storeToRefs(store);
 
-const genre = computed(() => props.genre_ids);
-const year = computed(() => props.release_date?.split('-')[0]);
+const genre = computed(() => movie?.value?.genre_ids);
+const year = computed(() => movie?.value?.release_date?.split('-')[0]);
 </script>
 
 <template>
-    <article>
-        <img v-image:poster="{ path: poster_path, title }">
+    <article v-if="movie">
+        <img v-image:poster="{ path: movie.poster_path, title: movie.title }">
         <div class="description">
             <header>
-                <h1 class="title">{{ title }}</h1>
+                <h1 class="title">{{ movie.title }}</h1>
                 <span class="rating"></span>
             </header>
             <span class="genre">{{ genre }}</span>
@@ -43,7 +25,7 @@ const year = computed(() => props.release_date?.split('-')[0]);
                 <MovieParam unit="year" :value="year" />
                 <!-- <MovieParam unit="min" :value="duration" /> -->
             </div>
-            <p>{{ overview }}</p>
+            <p>{{ movie.overview }}</p>
         </div>
 
     </article>
