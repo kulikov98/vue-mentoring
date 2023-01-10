@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { storeToRefs } from 'pinia';
 import AppHeader from './components/AppHeader.vue';
 import AppButtonToggle from './components/AppButtonToggle.vue';
 
@@ -7,20 +7,10 @@ import MovieSearch from './components/MovieSearch.vue';
 import MovieList from './components/MovieList.vue';
 import MovieDescription from './components/MovieDescription.vue';
 import { SearchBy, SortBy } from './helpers/constants';
-import { IMovieSearchResult } from './helpers/types';
-import { getMoviesDiscovery, getMovies } from './helpers/api-service';
+import { useMovieStore } from './stores/MovieStore';
 
-const sortBy = ref(SortBy.ReleaseDate);
-const searchBy = ref(SearchBy.Title);
-const searchQuery = ref('');
-const movieSearchResult = ref<IMovieSearchResult>({
-  page: 0,
-  results: [],
-  total_pages: 0,
-  total_results: 0,
-});
-const isLoading = ref(false);
-const selectedMovie = ref();
+const store = useMovieStore();
+const { selectedMovie, sortBy, searchBy } = storeToRefs(store);
 
 const sortByProps = {
   inputName: 'sort-by',
@@ -35,50 +25,27 @@ const searchByProps = {
   title: 'search by',
 };
 
-const search = async () => {
-  try {
-    isLoading.value = true;
-
-    if (searchQuery.value === '') {
-      movieSearchResult.value = await getMoviesDiscovery(sortBy.value);
-    } else {
-      movieSearchResult.value = await getMovies(searchQuery.value, sortBy.value);
-    }
-  } finally {
-    isLoading.value = false;
-  }
-};
-
-watch(sortBy, search);
-watch(searchQuery, search);
-
 // initial load
-search();
+store.search();
 </script>
 
 <template>
   <!-- Header -->
-  <AppHeader
-    :withSearch="Boolean(selectedMovie)"
-    @show-search="selectedMovie = null"
-  >
+  <AppHeader>
     <div
       v-if="Boolean(selectedMovie)"
       class="movie-description"
     >
-      <MovieDescription :="selectedMovie" />
+      <MovieDescription />
     </div>
     <div
       v-else
       class="movie-search"
     >
-      <MovieSearch
-        :searchQuery="searchQuery"
-        @search="(v) => (searchQuery = v)"
-      />
+      <MovieSearch />
       <AppButtonToggle
         :="searchByProps"
-        @selected="(v) => (searchBy = v)"
+        @selected="(v) => store.setSearchBy(v)"
       />
     </div>
   </AppHeader>
@@ -87,17 +54,13 @@ search();
   <section class="sort">
     <AppButtonToggle
       :="sortByProps"
-      @selected="(v) => (sortBy = v)"
+      @selected="(v) => store.setSortBy(v)"
     ></AppButtonToggle>
   </section>
 
   <!-- Search results -->
   <section class="search-results">
-    <MovieList
-      :isLoading="isLoading"
-      :="movieSearchResult"
-      @select-movie="(movie) => (selectedMovie = movie)"
-    />
+    <MovieList />
   </section>
 </template>
 

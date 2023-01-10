@@ -1,5 +1,8 @@
 import MovieDescription from '../components/MovieDescription.vue';
+import { useMovieStore } from '../stores/MovieStore';
 import { movies } from './test-data';
+
+const store = useMovieStore();
 
 export default {
   name: 'MovieDescription',
@@ -11,10 +14,18 @@ const Template = (args) => ({
   setup() {
     return { args };
   },
-  template: '<MovieDescription :=args />',
+  template: '<MovieDescription />',
+  created() {
+    store.selectMovie(args);
+  },
 });
 
-export const Default = Template.bind(null);
-Default.args = {
+export const Example1 = Template.bind(null);
+Example1.args = {
   ...movies[0],
+};
+
+export const Example2 = Template.bind(null);
+Example2.args = {
+  ...movies[1],
 };

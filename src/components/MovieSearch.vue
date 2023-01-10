@@ -1,18 +1,15 @@
 <script setup lang="ts">
+import { useMovieStore } from '@/stores/MovieStore';
+import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
 import AppButton from './AppButton.vue';
 import AppInput from './AppInput.vue';
 
-const props = defineProps<{
-  searchQuery: string;
-}>();
+const store = useMovieStore();
+const { searchQuery } = storeToRefs(store);
 
-const text = ref(props.searchQuery);
-const emit = defineEmits(['search']);
-
-const onSearch = () => {
-  emit('search', text.value);
-};
+const text = ref(searchQuery.value);
+const onSearch = () => store.search(text.value);
 </script>
 
 <template>
