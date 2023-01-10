@@ -19,7 +19,7 @@ const props = defineProps<{
   vote_count: number;
 }>();
 
-const genre = computed(() => props.genre_ids);
+const genre = computed(() => props.genre_ids.toString());
 const year = computed(() => props.release_date?.split('-')[0]);
 </script>
 
@@ -28,11 +28,11 @@ const year = computed(() => props.release_date?.split('-')[0]);
     <img v-image:poster.lazy="{ path: poster_path, title }" />
     <footer>
       <div class="description">
-        <span class="name">{{ title }}</span>
-        <span class="genre">{{ genre }}</span>
+        <span class="name" data-testid="title">{{ title }}</span>
+        <span class="genre" data-testid="genre">{{ genre }}</span>
       </div>
       <div class="year">
-        <span>{{ year }}</span>
+        <span data-testid="year">{{ year }}</span>
       </div>
     </footer>
   </article>
