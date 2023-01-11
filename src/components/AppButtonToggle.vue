@@ -21,6 +21,7 @@ watch(selected, () => {
 <template>
   <div class="button-toggle">
     <span
+      data-testid="title"
       class="title"
       v-if="title"
       >{{ title }}
@@ -37,6 +38,7 @@ watch(selected, () => {
         :name="inputName"
         :value="btn.name"
         v-model="selected"
+        data-testid="input-radio"
       />
     </label>
   </div>

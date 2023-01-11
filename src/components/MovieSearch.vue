@@ -19,7 +19,7 @@ const onSearch = () => store.search(text.value);
       <AppInput
         :init-value="searchQuery"
         @input="(v) => text = v"
-        @keydown.enter="onSearch"
+        @keydown-enter="onSearch"
         placeholder="Search"
       />
       <AppButton

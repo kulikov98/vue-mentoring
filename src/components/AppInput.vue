@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const text = ref(props.initValue);
-const emit = defineEmits(['input', 'keydown.enter']);
+const emit = defineEmits(['input', 'keydown-enter']);
 
 watch(text, () => emit('input', text.value));
 </script>
@@ -24,7 +24,7 @@ watch(text, () => emit('input', text.value));
     type="text"
     v-model="text"
     :placeholder="placeholder"
-    @keydown.enter="emit('keydown.enter')"
+    @keydown.enter="emit('keydown-enter')"
   />
 </template>
 

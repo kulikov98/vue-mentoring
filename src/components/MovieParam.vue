@@ -6,7 +6,7 @@ defineProps<{
 </script>
 
 <template>
-    <div v-if="unit && value">
+    <div v-if="unit && value" data-testid="movie-param">
         <span class="value">{{ value }}</span>
         <span class="unit">{{ unit }}</span>
     </div>

@@ -12,11 +12,13 @@ const { isLoading, hasLoaded, movies } = storeToRefs(store);
   <span
     v-if="isLoading"
     class="info"
+    data-testid="loading"
     >Looking for movies...</span
   >
   <section
     v-else-if="hasLoaded"
     class="movie-list"
+    data-testid="movies"
   >
     <MovieCard
       v-for="movie in movies"
@@ -29,6 +31,7 @@ const { isLoading, hasLoaded, movies } = storeToRefs(store);
   <span
     v-else
     class="info"
+    data-testid="no-results"
     >No movies found</span
   >
 </template>
