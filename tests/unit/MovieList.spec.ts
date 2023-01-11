@@ -20,8 +20,8 @@ describe('MovieList', () => {
       global: {
         plugins: [pinia],
         directives: {
-          image: {}
-        }
+          image: {},
+        },
       },
     });
   });
@@ -39,8 +39,8 @@ describe('MovieList', () => {
     });
 
     it('should not show movies section', () => {
-      const movies = wrapper.find(SELECTORS.movies);
-      expect(movies.exists()).toBeFalsy();
+      const moviesSection = wrapper.find(SELECTORS.movies);
+      expect(moviesSection.exists()).toBeFalsy();
     });
 
     it('should not show "not found" text', () => {
@@ -61,8 +61,8 @@ describe('MovieList', () => {
     });
 
     it('should show movies section', () => {
-      const movies = wrapper.find(SELECTORS.movies);
-      expect(movies.exists()).toBeTruthy();
+      const moviesSection = wrapper.find(SELECTORS.movies);
+      expect(moviesSection.exists()).toBeTruthy();
     });
 
     it('should not show "not found" text', () => {
@@ -79,13 +79,13 @@ describe('MovieList', () => {
       const movieCard = wrapper.findComponent({ name: 'MovieCard' });
       movieCard.trigger('click');
       expect(store.selectMovie).toHaveBeenCalledWith(movies[0]);
-    })
+    });
 
     it('should trigger selectMovie(movie) when movie card selected by enter key press', () => {
       const movieCard = wrapper.findComponent({ name: 'MovieCard' });
       movieCard.trigger('keypress.enter');
       expect(store.selectMovie).toHaveBeenCalledWith(movies[0]);
-    })
+    });
   });
 
   describe('no results state:', () => {
@@ -100,8 +100,8 @@ describe('MovieList', () => {
     });
 
     it('should not show movies section', () => {
-      const movies = wrapper.find(SELECTORS.movies);
-      expect(movies.exists()).toBeFalsy();
+      const moviesSection = wrapper.find(SELECTORS.movies);
+      expect(moviesSection.exists()).toBeFalsy();
     });
 
     it('should show "not found" text', () => {

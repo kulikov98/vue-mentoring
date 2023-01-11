@@ -2,7 +2,7 @@ import MovieParam from '@/components/MovieParam.vue';
 import { mount } from '@vue/test-utils';
 
 const SELECTORS = {
-  container: '[data-testid="movie-param"]'
+  container: '[data-testid="movie-param"]',
 };
 
 describe('MovieParam', () => {
@@ -10,7 +10,7 @@ describe('MovieParam', () => {
     const wrapper = mount(MovieParam, {
       props: {
         value: 'value',
-      }
+      },
     });
     const container = wrapper.find(SELECTORS.container);
     expect(container.exists()).toBeFalsy();
@@ -20,7 +20,7 @@ describe('MovieParam', () => {
     const wrapper = mount(MovieParam, {
       props: {
         unit: 'unit',
-      }
+      },
     });
     const container = wrapper.find(SELECTORS.container);
     expect(container.exists()).toBeFalsy();
@@ -31,7 +31,7 @@ describe('MovieParam', () => {
       props: {
         value: 'value',
         unit: 'unit',
-      }
+      },
     });
     const container = wrapper.find(SELECTORS.container);
     expect(container.exists()).toBeTruthy();
@@ -42,11 +42,11 @@ describe('MovieParam', () => {
       props: {
         value: 'value',
         unit: 'unit',
-      }
+      },
     });
     const container = wrapper.find(SELECTORS.container);
     const [value, unit] = container.findAll('span');
     expect(value.text()).toBe('value');
     expect(unit.text()).toBe('unit');
-  })
+  });
 });

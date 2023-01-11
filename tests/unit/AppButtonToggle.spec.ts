@@ -11,7 +11,7 @@ const TEST_DATA = {
 const SELECTORS = {
   title: '[data-testid="title"]',
   inputRadio: '[data-testid="input-radio"]',
-}
+};
 
 describe('AppButtonToggle', () => {
   it('should select the 1st button by default', () => {
@@ -19,7 +19,7 @@ describe('AppButtonToggle', () => {
       props: {
         inputName: TEST_DATA.inputName,
         buttons: TEST_DATA.buttons,
-      }
+      },
     });
     const firstBtn: DOMWrapper<HTMLInputElement> = wrapper.find(SELECTORS.inputRadio);
 
@@ -34,7 +34,7 @@ describe('AppButtonToggle', () => {
         inputName: TEST_DATA.inputName,
         buttons: TEST_DATA.buttons,
         selected: selectedName,
-      }
+      },
     });
     const selectedBtn: DOMWrapper<HTMLInputElement> = wrapper.find(`${SELECTORS.inputRadio}:checked`);
     expect(selectedBtn.element.value).toBe(selectedName);
@@ -46,7 +46,7 @@ describe('AppButtonToggle', () => {
         inputName: TEST_DATA.inputName,
         buttons: TEST_DATA.buttons,
         title: TEST_DATA.title,
-      }
+      },
     });
 
     const title = wrapper.find(SELECTORS.title);
@@ -58,7 +58,7 @@ describe('AppButtonToggle', () => {
       props: {
         inputName: TEST_DATA.inputName,
         buttons: TEST_DATA.buttons,
-      }
+      },
     });
 
     const title = wrapper.find(SELECTORS.title);
@@ -70,7 +70,7 @@ describe('AppButtonToggle', () => {
       props: {
         inputName: TEST_DATA.inputName,
         buttons: TEST_DATA.buttons,
-      }
+      },
     });
     const btn2 = wrapper.findAll(SELECTORS.inputRadio)[1] as DOMWrapper<HTMLInputElement>;
     await btn2.trigger('change');

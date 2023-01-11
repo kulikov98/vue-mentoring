@@ -15,7 +15,7 @@ describe('AppButton', () => {
     const wrapper = mount(AppButton, {
       props: {
         label: TEST_DATA.btnText,
-      }
+      },
     });
 
     expect(wrapper.text()).toBe(TEST_DATA.btnText);
@@ -26,7 +26,7 @@ describe('AppButton', () => {
       props: {
         label: TEST_DATA.btnText,
         backgroundColor: TEST_DATA.bgColor,
-      }
+      },
     });
     const btnEl = wrapper.get('button').element;
     expect(btnEl.style.backgroundColor).toBe(TEST_DATA.bgColor);
@@ -36,7 +36,7 @@ describe('AppButton', () => {
     const wrapper = mount(AppButton, {
       props: {
         label: TEST_DATA.btnText,
-      }
+      },
     });
     const btn = wrapper.get('button');
     expect(btn.classes()).toContain(TEST_DATA.defaultClass);
@@ -46,7 +46,7 @@ describe('AppButton', () => {
     const wrapper = mount(AppButton, {
       props: {
         label: TEST_DATA.btnText,
-      }
+      },
     });
     const btn = wrapper.get('button');
     expect(btn.classes()).toContain(TEST_DATA.mediumSizeClass);
@@ -57,7 +57,7 @@ describe('AppButton', () => {
       props: {
         label: TEST_DATA.btnText,
         size: 'large',
-      }
+      },
     });
     const btn = wrapper.get('button');
     expect(btn.classes()).toContain(TEST_DATA.largeSizeClass);
@@ -67,9 +67,9 @@ describe('AppButton', () => {
     const wrapper = mount(AppButton, {
       props: {
         label: TEST_DATA.btnText,
-      }
+      },
     });
     wrapper.get('button').trigger('click');
     expect(wrapper.emitted()).toHaveProperty(TEST_DATA.emits);
   });
-})
+});

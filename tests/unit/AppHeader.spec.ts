@@ -15,7 +15,7 @@ describe('AppHeader', () => {
         plugins: [pinia],
         stubs: {
           'font-awesome-icon': true,
-        }
+        },
       },
     });
   });

@@ -4,7 +4,7 @@ import { mount, VueWrapper } from '@vue/test-utils';
 const TEST_DATA = {
   initValue: 'test-initValue',
   placeholder: 'test-placeholder',
-}
+};
 
 describe('AppInput', () => {
   let wrapper: VueWrapper<any>;
@@ -24,7 +24,7 @@ describe('AppInput', () => {
     wrapper = mount(AppInput, {
       props: {
         initValue: TEST_DATA.initValue,
-      }
+      },
     });
     const input = wrapper.find('input');
     expect(input.element.value).toBe(TEST_DATA.initValue);
@@ -51,4 +51,4 @@ describe('AppInput', () => {
 
     expect(wrapper.emitted()).toHaveProperty('input', [['abc']]);
   });
-})
+});

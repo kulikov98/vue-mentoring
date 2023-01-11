@@ -5,7 +5,7 @@ import { movies } from './test-data';
 const SELECTORS = {
   title: '[data-testid="title"]',
   genre: '[data-testid="genre"]',
-  year: '[data-testid="year"]'
+  year: '[data-testid="year"]',
 };
 
 describe('MovieCard', () => {
@@ -17,9 +17,9 @@ describe('MovieCard', () => {
       props: movie,
       global: {
         directives: {
-          image: {}
-        }
-      }
+          image: {},
+        },
+      },
     });
   });
 

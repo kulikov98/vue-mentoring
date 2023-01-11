@@ -16,7 +16,7 @@ describe('MovieDescription', () => {
         plugins: [pinia],
         directives: {
           image: {},
-        }
+        },
       },
     });
   });

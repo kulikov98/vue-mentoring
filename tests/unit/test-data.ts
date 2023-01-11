@@ -1,4 +1,4 @@
-import { IMovie } from "@/helpers/types";
+import { IMovie } from '@/helpers/types';
 
 // eslint-disable-next-line
 export const movies: IMovie[] = [
