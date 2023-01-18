@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { SearchBy } from '@/helpers/constants';
 import { useMovieStore } from '@/stores/MovieStore';
 import { storeToRefs } from 'pinia';
 import { ref } from 'vue';
@@ -6,10 +7,28 @@ import AppButton from './AppButton.vue';
 import AppInput from './AppInput.vue';
 
 const store = useMovieStore();
-const { searchQuery } = storeToRefs(store);
+const { searchQuery, searchBy, genres } = storeToRefs(store);
 
+const suggestions = ref<string[]>([]);
 const text = ref(searchQuery.value);
 const onSearch = () => store.search(text.value);
+
+const onInput = (str: string) => {
+  text.value = str;
+
+  const isSearchByName = searchBy.value !== SearchBy.Genre;
+  const isEqualToSuggestion = !!suggestions.value
+    .find((s) => s.toLowerCase() === str.toLowerCase());
+
+  if (str === '' || isSearchByName || isEqualToSuggestion) {
+    suggestions.value = [];
+    return;
+  }
+
+  suggestions.value = genres.value
+    .filter((genre) => genre.name.toLowerCase().startsWith(str.toLowerCase()))
+    .map((genre) => genre.name);
+};
 </script>
 
 <template>
@@ -18,7 +37,8 @@ const onSearch = () => store.search(text.value);
     <div class="search-block">
       <AppInput
         :init-value="searchQuery"
-        @input="(v) => text = v"
+        :suggestions="suggestions"
+        @input="onInput"
         @keydown-enter="onSearch"
         placeholder="Search"
       />

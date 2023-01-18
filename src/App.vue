@@ -27,6 +27,7 @@ const searchByProps = {
 };
 
 // initial load
+store.getGenres();
 store.search();
 </script>
 
@@ -54,6 +55,7 @@ store.search();
   <!-- Sort -->
   <section class="sort">
     <AppButtonToggle
+      v-if="searchBy === SearchBy.Genre"
       :="sortByProps"
       @selected="(v) => store.setSortBy(v)"
     ></AppButtonToggle>

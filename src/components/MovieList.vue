@@ -5,7 +5,7 @@ import { storeToRefs } from 'pinia';
 import MovieCard from './MovieCard.vue';
 
 const store = useMovieStore();
-const { isLoading, hasLoaded, movies } = storeToRefs(store);
+const { isLoading, hasLoaded, moviesWithGenres } = storeToRefs(store);
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const { isLoading, hasLoaded, movies } = storeToRefs(store);
     data-testid="movies"
   >
     <MovieCard
-      v-for="movie in movies"
+      v-for="movie in moviesWithGenres"
       :key="movie.id"
       :="movie"
       @click="store.selectMovie(movie)"
