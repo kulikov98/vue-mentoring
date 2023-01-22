@@ -37,7 +37,7 @@ describe('MovieCard', () => {
 
   it('should render genre', () => {
     const genre = wrapper.find(SELECTORS.genre);
-    expect(genre.text()).toBe(movie.genre_ids.toString());
+    expect(genre.text()).toBe(movie.genres?.join(', '));
   });
 
   it('should render year', () => {

@@ -52,7 +52,10 @@ describe('MovieList', () => {
   describe('loaded state:', () => {
     beforeEach(() => {
       store.isLoading = false;
-      store.data.results = movies;
+      // @ts-expect-error: getters are writable in tests
+      store.hasLoaded = true;
+      // @ts-expect-error: getters are writable in tests
+      store.moviesWithGenres = movies;
     });
 
     it('should not show loading text', () => {
@@ -91,6 +94,8 @@ describe('MovieList', () => {
   describe('no results state:', () => {
     beforeEach(() => {
       store.isLoading = false;
+      // @ts-expect-error: getters are writable in tests
+      store.hasLoaded = false;
       store.data.results = [];
     });
 

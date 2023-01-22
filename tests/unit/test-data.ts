@@ -18,6 +18,7 @@ export const movies: IMovie[] = [
     video: false,
     vote_average: 8.5,
     vote_count: 24394,
+    genres: ['1', '2', '3'],
   },
   {
     adult: false,
@@ -35,6 +36,7 @@ export const movies: IMovie[] = [
     video: false,
     vote_average: 8.4,
     vote_count: 25551,
+    genres: ['1', '2', '3'],
   },
   {
     adult: false,
@@ -52,5 +54,6 @@ export const movies: IMovie[] = [
     video: false,
     vote_average: 8.5,
     vote_count: 23905,
+    genres: ['1', '2', '3'],
   },
 ];
