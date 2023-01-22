@@ -17,9 +17,10 @@ const props = defineProps<{
   video: boolean;
   vote_average: number;
   vote_count: number;
+  genres: string[];
 }>();
 
-const genre = computed(() => props.genre_ids.toString());
+const genre = computed(() => props.genres.join(', '));
 const year = computed(() => props.release_date?.split('-')[0]);
 </script>
 
