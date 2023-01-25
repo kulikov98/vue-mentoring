@@ -1,4 +1,4 @@
-// https://docs.cypress.io/api/table-of-contents
+/* eslint-disable no-use-before-define */
 
 describe('Movies app', () => {
   const moviesToLoad = 20;
@@ -20,7 +20,7 @@ describe('Movies app', () => {
   });
 
   it('should search by title', () => {
-    cy.intercept(`https://api.themoviedb.org/3/**`).as('searchMovies');
+    cy.intercept('https://api.themoviedb.org/3/**').as('searchMovies');
     cy.get('.search-block input[type="text"]').type('home alone');
     cy.get('.search-block button').click();
     cy.wait('@searchMovies');
@@ -33,7 +33,7 @@ describe('Movies app', () => {
   });
 
   it('should search by genre', () => {
-    cy.intercept(`https://api.themoviedb.org/3/**`).as('searchMovies');
+    cy.intercept('https://api.themoviedb.org/3/**').as('searchMovies');
     cy.get('.movie-search input[value="genre"]').click({ force: true });
     cy.get('.search-block input[type="text"]').clear().type('comedy');
     cy.get('.search-block button').click();
@@ -56,7 +56,7 @@ describe('Movies app', () => {
   });
 
   it('should show movie info', () => {
-    cy.intercept(`https://api.themoviedb.org/3/**`).as('searchMovies');
+    cy.intercept('https://api.themoviedb.org/3/**').as('searchMovies');
     cy.get('.search-block input[type="text"]').clear();
     cy.get('.movie-search input[value="title"]').click({ force: true });
     cy.get('.search-block button').click();
@@ -84,7 +84,6 @@ describe('Movies app', () => {
   it('should exit from movie info to search mode', () => {
     cy.get('header button').click();
     cy.get('h1').should('have.text', 'Find your movie');
-
   });
 });
 
