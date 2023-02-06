@@ -1,7 +1,7 @@
 import AppHeader from '../components/AppHeader.vue';
 import { useMovieStore } from '../stores/MovieStore';
 
-const store = useMovieStore()
+const store = useMovieStore();
 
 export default {
   name: 'AppHeader',
@@ -19,7 +19,7 @@ const Template = (args) => ({
   template: '<AppHeader />',
   created() {
     store.selectMovie(args.withSearch ? {} : null);
-  }
+  },
 });
 
 export const Default = Template.bind(null);

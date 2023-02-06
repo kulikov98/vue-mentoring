@@ -1,7 +1,9 @@
 <script setup lang="ts">
 /* eslint-disable camelcase, vuejs-accessibility/alt-text */
 import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const props = defineProps<{
   adult: boolean;
   backdrop_path: string | null;
@@ -17,25 +19,26 @@ const props = defineProps<{
   video: boolean;
   vote_average: number;
   vote_count: number;
+  genres: string[];
 }>();
 
-const genre = computed(() => props.genre_ids);
+const genre = computed(() => props.genres.join(', '));
 const year = computed(() => props.release_date?.split('-')[0]);
 </script>
 
 <template>
-  <article class="card">
+  <router-link :to="{ name: 'details', params: { id }, query: route.query }" class="card">
     <img v-image:poster.lazy="{ path: poster_path, title }" />
     <footer>
       <div class="description">
-        <span class="name">{{ title }}</span>
-        <span class="genre">{{ genre }}</span>
+        <span class="name" data-testid="title">{{ title }}</span>
+        <span class="genre" data-testid="genre">{{ genre }}</span>
       </div>
       <div class="year">
-        <span>{{ year }}</span>
+        <span data-testid="year">{{ year }}</span>
       </div>
     </footer>
-  </article>
+  </router-link>
 </template>
 
 <style scoped>

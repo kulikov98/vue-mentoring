@@ -2,15 +2,16 @@
 /* eslint-disable vuejs-accessibility/label-has-for */
 import { ref, watch } from 'vue';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   inputName: string;
   buttons: Array<{ name: string }>;
   selected?: string;
   title?: string;
-}>();
+}>(), {
+  selected: (s) => s.buttons[0].name,
+});
 
-const selected = ref(props.selected ? props.selected : props.buttons[0].name);
-
+const selected = ref(props.selected);
 const emit = defineEmits(['selected']);
 
 watch(selected, () => {
@@ -21,6 +22,7 @@ watch(selected, () => {
 <template>
   <div class="button-toggle">
     <span
+      data-testid="title"
       class="title"
       v-if="title"
       >{{ title }}
@@ -37,6 +39,7 @@ watch(selected, () => {
         :name="inputName"
         :value="btn.name"
         v-model="selected"
+        data-testid="input-radio"
       />
     </label>
   </div>
