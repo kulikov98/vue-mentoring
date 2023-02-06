@@ -2,14 +2,28 @@
 /* eslint-disable camelcase, vuejs-accessibility/alt-text */
 import { useMovieStore } from '@/stores/MovieStore';
 import { storeToRefs } from 'pinia';
-import { computed } from 'vue';
+import { computed, onUnmounted, watch } from 'vue';
 import MovieParam from './MovieParam.vue';
 
-const store = useMovieStore();
-const { currentMovie: movie } = storeToRefs(store);
+const props = defineProps<{
+  id: string;
+}>();
 
-const genre = computed(() => movie?.value?.genres?.join(', '));
+const store = useMovieStore();
+store.getMovie(props.id);
+
+watch(() => props.id, () => {
+  store.getMovie(props.id);
+});
+
+const { selectedMovie: movie } = storeToRefs(store);
+
+const genre = computed(() => movie?.value?.genres?.map((g: any) => g.name).join(', '));
 const year = computed(() => movie?.value?.release_date?.split('-')[0]);
+
+onUnmounted(() => {
+  store.selectMovie(null);
+});
 </script>
 
 <template>
@@ -36,6 +50,7 @@ article {
     grid-auto-rows: auto;
     grid-template-columns: 280px minmax(280px, 1fr);
     column-gap: min(60px, 6%);
+    padding: 40px 0;
     color: var(--gray-text);
 }
 

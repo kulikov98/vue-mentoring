@@ -41,6 +41,15 @@ export const getMovies = async (query: string) => {
   return json;
 };
 
+export const getMovie = async (id: string) => {
+  const res = await fetch(
+    `${API_BASE_URL}/movie/${id}`,
+    defaultRequestOptions,
+  );
+  const json = await res.json();
+  return json;
+};
+
 export const getGenres = async () => {
   const res = await fetch(
     `${API_BASE_URL}/genre/movie/list`,

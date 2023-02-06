@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { getMoviesDiscovery, getGenres, getMovies } from '@/helpers/api-service';
+import * as API from '@/helpers/api-service';
 import { SearchBy, SortBy } from '@/helpers/constants';
 import { IMovie, IGenre, IMovieSearchResult } from '@/helpers/types';
 import { defineStore } from 'pinia';
@@ -38,7 +38,7 @@ export const useMovieStore = defineStore('movies', {
     async getMovies() {
       try {
         this.isLoading = true;
-        this.data = await getMovies(this.searchQuery);
+        this.data = await API.getMovies(this.searchQuery);
       } catch (e) {
         console.error('getMovies failed:', e);
       } finally {
@@ -46,10 +46,18 @@ export const useMovieStore = defineStore('movies', {
       }
     },
 
+    async getMovie(id: string) {
+      try {
+        this.selectedMovie = await API.getMovie(id);
+      } catch (e) {
+        console.error('getMovie failed:', e);
+      }
+    },
+
     async getMoviesDiscovery(genreId = '') {
       try {
         this.isLoading = true;
-        this.data = await getMoviesDiscovery(this.sortBy, genreId);
+        this.data = await API.getMoviesDiscovery(this.sortBy, genreId);
       } catch (e) {
         console.error('getMoviesDiscovery failed:', e);
       } finally {
@@ -59,7 +67,7 @@ export const useMovieStore = defineStore('movies', {
 
     async getGenres() {
       try {
-        const { genres } = await getGenres();
+        const { genres } = await API.getGenres();
         this.genres = genres;
       } catch (e) {
         console.error('getGenres failed:', e);
@@ -91,12 +99,10 @@ export const useMovieStore = defineStore('movies', {
 
     setSortBy(sortBy: SortBy) {
       this.sortBy = sortBy;
-      this.search(this.searchQuery);
     },
 
     setSearchBy(searchBy: SearchBy) {
       this.searchBy = searchBy;
-      this.search(this.searchQuery);
     },
   },
 });

@@ -1,7 +1,9 @@
 <script setup lang="ts">
 /* eslint-disable camelcase, vuejs-accessibility/alt-text */
 import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
+const route = useRoute();
 const props = defineProps<{
   adult: boolean;
   backdrop_path: string | null;
@@ -25,7 +27,7 @@ const year = computed(() => props.release_date?.split('-')[0]);
 </script>
 
 <template>
-  <article class="card">
+  <router-link :to="{ name: 'details', params: { id }, query: route.query }" class="card">
     <img v-image:poster.lazy="{ path: poster_path, title }" />
     <footer>
       <div class="description">
@@ -36,7 +38,7 @@ const year = computed(() => props.release_date?.split('-')[0]);
         <span data-testid="year">{{ year }}</span>
       </div>
     </footer>
-  </article>
+  </router-link>
 </template>
 
 <style scoped>

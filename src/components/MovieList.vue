@@ -24,8 +24,6 @@ const { isLoading, hasLoaded, moviesWithGenres } = storeToRefs(store);
       v-for="movie in moviesWithGenres"
       :key="movie.id"
       :="movie"
-      @click="store.selectMovie(movie)"
-      @keypress.enter="store.selectMovie(movie)"
     />
   </section>
   <span

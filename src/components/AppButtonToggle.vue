@@ -2,15 +2,16 @@
 /* eslint-disable vuejs-accessibility/label-has-for */
 import { ref, watch } from 'vue';
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   inputName: string;
   buttons: Array<{ name: string }>;
   selected?: string;
   title?: string;
-}>();
+}>(), {
+  selected: (s) => s.buttons[0].name,
+});
 
-const selected = ref(props.selected ? props.selected : props.buttons[0].name);
-
+const selected = ref(props.selected);
 const emit = defineEmits(['selected']);
 
 watch(selected, () => {
