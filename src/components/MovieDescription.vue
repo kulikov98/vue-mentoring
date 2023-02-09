@@ -8,7 +8,7 @@ import MovieParam from './MovieParam.vue';
 const store = useMovieStore();
 const { currentMovie: movie } = storeToRefs(store);
 
-const genre = computed(() => movie?.value?.genre_ids);
+const genre = computed(() => movie?.value?.genres?.join(', '));
 const year = computed(() => movie?.value?.release_date?.split('-')[0]);
 </script>
 
@@ -27,7 +27,6 @@ const year = computed(() => movie?.value?.release_date?.split('-')[0]);
             </div>
             <p>{{ movie.overview }}</p>
         </div>
-
     </article>
 </template>
 

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// eslint-ignore no-unused-vars
 import { storeToRefs } from 'pinia';
 import AppHeader from './components/AppHeader.vue';
 import AppButtonToggle from './components/AppButtonToggle.vue';
@@ -26,6 +27,7 @@ const searchByProps = {
 };
 
 // initial load
+store.getGenres();
 store.search();
 </script>
 
@@ -53,6 +55,7 @@ store.search();
   <!-- Sort -->
   <section class="sort">
     <AppButtonToggle
+      v-if="searchBy === SearchBy.Genre"
       :="sortByProps"
       @selected="(v) => store.setSortBy(v)"
     ></AppButtonToggle>

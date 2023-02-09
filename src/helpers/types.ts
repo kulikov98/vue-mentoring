@@ -14,6 +14,7 @@ export interface IMovie {
     video: boolean;
     vote_average: number;
     vote_count: number;
+    genres?: string[];
 }
 
 export interface IMovieSearchResult {
@@ -21,4 +22,9 @@ export interface IMovieSearchResult {
     results: IMovie[];
     total_pages: number;
     total_results: number;
+}
+
+export interface IGenre {
+  id: number,
+  name: string,
 }
