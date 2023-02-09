@@ -1,4 +1,5 @@
-import { setActivePinia, createPinia } from 'pinia'
+/* eslint-disable @typescript-eslint/no-var-requires, global-require */
+import { setActivePinia, createPinia } from 'pinia';
 import { useMovieStore } from '@/stores/MovieStore';
 import { SearchBy, SortBy } from '@/helpers/constants';
 
@@ -13,7 +14,7 @@ const genresData = {
   genres: [
     { name: 'genre1', id: 1 },
     { name: 'genre2', id: 2 },
-  ]
+  ],
 };
 
 jest.mock('@/helpers/api-service', () => ({
