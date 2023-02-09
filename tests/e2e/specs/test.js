@@ -39,6 +39,7 @@ describe('Movies app', () => {
     cy.get('.search-block button').click();
 
     cy.wait('@searchMovies');
+    cy.wait(1000);
 
     cy.get('.movie-list')
       .children()
